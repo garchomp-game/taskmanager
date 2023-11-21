@@ -1,6 +1,11 @@
 <script setup>
+import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ToDoList from '@/Components/ToDoList.vue';
+
+const props = defineProps({ user: Object, tasks: Object})
+
+const user = ref(props.user)
 </script>
 
 <template>
@@ -14,6 +19,8 @@ import ToDoList from '@/Components/ToDoList.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    hello {{ user.name }}
+                    <!-- ここでToDoListにタスク一覧のデータを渡す。-->
                     <ToDoList />
                 </div>
             </div>
