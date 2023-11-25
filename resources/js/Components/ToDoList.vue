@@ -1,33 +1,43 @@
-<template>
-    <div class="container">
-        <div class="flex flex-col">
-            <div class="mb-4">
-                <TextInput
-                    ref="input"
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    :value="modelValue"
-                    @input="$emit('update:modelValue', $event.target.value)"
-                    placeholder="新しいタスクを追加"
-                />
-                </div>
-            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="task1">
-                        タスク1
-                    </label>
-                    <p class="text-gray-700 text-base">タスク1の詳細</p>
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="task2">
-                        タスク2
-                    </label>
-                    <p class="text-gray-700 text-base">タスク2の詳細</p>
-                </div>
-            </div>
-        </div>
+<script setup>
+import { defineProps, onMounted } from "vue";
 
+// propsを定義して、外部から渡されるデータを受け取る
+const props = defineProps({
+    tasks: Object, // tasksをArray型として定義
+});
+
+onMounted(() => {
+    console.log(props.tasks);
+});
+</script>
+
+<template>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">
+                ToDoリスト
+            </h3>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div
+                    v-for="task in tasks"
+                    :key="task.id"
+                    class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+                >
+                    <dt class="text-sm font-medium text-gray-500">
+                        {{ task.title }}
+                    </dt>
+                    <dd
+                        class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"
+                    >
+                        {{ task.description }}
+                        <span class="text-sm text-gray-600">
+                            (ステータス: {{ task.status.name }})</span
+                        >
+                    </dd>
+                </div>
+            </dl>
+        </div>
     </div>
 </template>
-<script setup>
-import TextInput from "@/Components/TextInput.vue"
-</script>

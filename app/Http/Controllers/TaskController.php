@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -16,7 +17,8 @@ class TaskController extends Controller
     {
 
         $user = Auth::user();
-        $tasks = $user->tasks; // 仮定：ユーザーに関連するタスクがあるとします
+        /* $tasks = $user->tasks; // 仮定：ユーザーに関連するタスクがあるとします */
+        $tasks = Task::all(); // 仮定：ユーザーに関連するタスクがあるとします
 
         return Inertia::render('Dashboard', [
             'user' => $user,
