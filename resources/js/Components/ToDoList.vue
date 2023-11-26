@@ -1,8 +1,8 @@
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
-import { useForm } from '@inertiajs/vue3';
-
-const form = useForm();
+import { Inertia } from '@inertiajs/inertia';
+import { defineProps, ref } from 'vue';
+import route from 'ziggy-js'; // Ziggy をインポート
+// @inertiajs/inertiaとziggyが最初からは入ってないことが発覚。思い込みは良くない。素直にとりあえずインストールしてみることが大事。それで動くこともある。
 
 // propsを定義して、外部から渡されるデータを受け取る
 const props = defineProps({
@@ -11,14 +11,18 @@ const props = defineProps({
 
 const tasks = ref(props.tasks);
 
-onMounted(() => {
-    console.log(props.tasks);
-});
-
 const deleteTask = (taskId) => {
     if (confirm('タスクを削除してもよろしいですか？')) {
-        form.delete(route('task.destroy', taskId), {
+        Inertia.delete(route('tasks.destroy', taskId), {
             preserveScroll: true,
+            onSuccess: () => {
+                // 現在ポップアップで表示しているようにしているが、動的に削除されたものが表示されるようにする。
+                // もしモーダルを表示するのであれば工夫が必要。
+                tasks.value = tasks.value.filter(task => task.id !== taskId);
+            },
+            onError: errors => {
+                console.error('削除中にエラーが発生しました:', errors);
+            }
         });
     }
 };

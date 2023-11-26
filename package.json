@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "build:debug": "vite build --debug"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
@@ -19,7 +20,9 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
+        "@inertiajs/inertia": "^0.11.1",
         "pug": "^3.0.2",
-        "pug-plain-loader": "^1.1.0"
+        "pug-plain-loader": "^1.1.0",
+        "ziggy-js": "^1.8.1"
     }
 }
