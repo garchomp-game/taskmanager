@@ -16,7 +16,7 @@ class TaskStatus extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function tasks(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function tasks(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Task::class);
     }

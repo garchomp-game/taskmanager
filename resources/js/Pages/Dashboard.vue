@@ -4,10 +4,9 @@ import ToDoList from '@/Components/ToDoList.vue';
 
 const props = defineProps({
   user: Object,
-  tasks: Object // tasksをArray型として定義
+  tasks: Array // tasksをArray型として定義
 });
 
-const user = props.user;
 const tasks = props.tasks; // tasksをrefで定義
 </script>
 
@@ -25,12 +24,8 @@ const tasks = props.tasks; // tasksをrefで定義
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <!-- ここでToDoListにタスク一覧のデータを渡す。-->
           <ToDoList :tasks="tasks" /> <!-- ToDoListコンポーネントにtasksを渡す -->
-
-          <!-- テスト用：タスクのリストを表示 -->
-          <!-- なお、まだテストデータのseedを定義していないのでそこからやる -->
         </div>
       </div>
     </div>
   </AppLayout>
 </template>
-

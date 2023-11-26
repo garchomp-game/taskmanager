@@ -1,16 +1,29 @@
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { defineProps, onMounted, ref } from "vue";
+import { useForm } from '@inertiajs/vue3';
+
+const form = useForm();
 
 // propsを定義して、外部から渡されるデータを受け取る
 const props = defineProps({
-    tasks: Object, // tasksをArray型として定義
+    tasks: Array, // tasksをArray型として定義
 });
+
+const tasks = ref(props.tasks);
 
 onMounted(() => {
     console.log(props.tasks);
 });
-</script>
 
+const deleteTask = (taskId) => {
+    if (confirm('タスクを削除してもよろしいですか？')) {
+        form.delete(route('task.destroy', taskId), {
+            preserveScroll: true,
+        });
+    }
+};
+
+</script>
 <template>
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
@@ -33,9 +46,10 @@ onMounted(() => {
                     >
                         {{ task.description }}
                         <span class="text-sm text-gray-600">
-                            (ステータス: {{ task.status.name }})</span
-                        >
+                            (ステータス: {{ task.status.name }})
+                        </span>
                     </dd>
+                    <button @click="deleteTask(task.id)" class="bg-red-500 text-white p-2 rounded">削除</button>
                 </div>
             </dl>
         </div>
