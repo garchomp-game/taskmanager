@@ -1,13 +1,14 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ToDoList from '@/Components/ToDoList.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   user: Object,
   tasks: Array // tasksをArray型として定義
 });
 
-const tasks = props.tasks; // tasksをrefで定義
+const tasks = ref(props.tasks);
 </script>
 
 <template>
