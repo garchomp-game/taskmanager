@@ -26,7 +26,7 @@ const tasks = ref(props.tasks);
             @click="addTask"
             class="bg-blue-500 text-white p-2 rounded mr-2"
         >
-            編集
+            新規登録
         </button>
         <div class="border-t border-gray-200">
             <dl>
