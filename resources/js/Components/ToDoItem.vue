@@ -18,6 +18,8 @@ const deleteTask = () => {
   if (confirm('このタスクを削除してもよろしいですか？')) {
     Inertia.delete(route('tasks.destroy', props.task.id), {
       onSuccess: () => {
+        // 削除したあと動的に更新されないため、この部分について考える
+        // 最も簡単なアプローチとしては、コンポーネント自体を削除したものをみなす処理をすることだと思う。なので、実際はItem側ではなく、List側での処理になると思う。
         emit('taskDeleted', props.task.id);
       }
     });
