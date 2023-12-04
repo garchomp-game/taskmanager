@@ -19,7 +19,7 @@ class TaskController extends Controller
 
         $user = Auth::user();
         /* $tasks = $user->tasks; // 仮定：ユーザーに関連するタスクがあるとします */
-        $tasks = Task::with("status")->get(); // 仮定：ユーザーに関連するタスクがあるとします
+        $tasks = Task::with("status")->get()->toArray(); // 仮定：ユーザーに関連するタスクがあるとします
 
         return Inertia::render('Dashboard', [
             'user' => $user,
@@ -30,9 +30,9 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create(): Response
     {
-        //
+        return Inertia::render("Task/Create");
     }
 
     /**

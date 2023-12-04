@@ -7,7 +7,7 @@ import route from "ziggy-js"; // Ziggy をインポート
 import { defineProps, ref } from "vue";
 
 const props = defineProps({
-    task: Object,
+    task: Array,
 });
 
 const task = ref(props.task);
