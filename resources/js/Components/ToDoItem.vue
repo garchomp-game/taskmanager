@@ -4,32 +4,32 @@ import route from "ziggy-js"; // Ziggy をインポート
 // @inertiajs/inertiaとziggyが最初からは入ってないことが発覚。思い込みは良くない。素直にとりあえずインストールしてみることが大事。それで動くこともある。
 // 実際の現場では、現場ごとに採用しているアプローチが異なるため、このような問題は都度確認をすること。
 
-import { defineProps, ref } from "vue";
+import { defineProps, ref, defineEmits } from "vue";
 
 const props = defineProps({
     task: Array,
 });
 
+const emit = defineEmits(['taskDeleted']);
+
 const task = ref(props.task);
 
 // 必要なCRUD操作のメソッドをここに実装
-
+// ToDoItem.vue 内の deleteTask メソッド
 const deleteTask = () => {
-  if (confirm('このタスクを削除してもよろしいですか？')) {
-    Inertia.delete(route('tasks.destroy', props.task.id), {
-      onSuccess: () => {
-        // 削除したあと動的に更新されないため、この部分について考える
-        // 最も簡単なアプローチとしては、コンポーネント自体を削除したものをみなす処理をすることだと思う。なので、実際はItem側ではなく、List側での処理になると思う。
-        emit('taskDeleted', props.task.id);
-      }
-    });
-  }
+    if (confirm("このタスクを削除してもよろしいですか？")) {
+        Inertia.delete(route("tasks.destroy", props.task.id), {
+            onSuccess: () => {
+                // 親コンポーネントへのイベント発火や状態の更新をここで行う
+                emit("taskDeleted", props.task.id);
+            },
+        });
+    }
 };
 
 const editTask = () => {
     // 編集処理の実装（例：モーダルを開く、別のページに遷移するなど）
 };
-
 </script>
 
 <template>

@@ -7,11 +7,16 @@ const props = defineProps({
     tasks: Array, // tasksをArray型として定義
 });
 
+const tasks = ref(props.tasks);
+
 const addTask = () => {
     Inertia.get(route("tasks.create"), {});
 };
 
-const tasks = ref(props.tasks);
+const handleTaskDeleted = (taskId) => {
+    tasks.value = tasks.value.filter((task) => task.id !== taskId);
+};
+
 </script>
 <template>
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -30,7 +35,12 @@ const tasks = ref(props.tasks);
         </button>
         <div class="border-t border-gray-200">
             <dl>
-                <ToDoItem v-for="task in tasks" :key="task.id" :task="task" />
+                <ToDoItem
+                    v-for="task in tasks"
+                    :key="task.id"
+                    :task="task"
+                    @taskDeleted="handleTaskDeleted"
+                />
             </dl>
         </div>
     </div>
