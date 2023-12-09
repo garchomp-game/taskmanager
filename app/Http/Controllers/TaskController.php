@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class TaskController extends Controller
 {
@@ -70,9 +70,9 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task): JsonResponse
+    public function destroy(Task $task): RedirectResponse
     {
         $task->delete();
-        return response()->json(['status' => 'success']);
+        return redirect()->route('tasks.index');
     }
 }
