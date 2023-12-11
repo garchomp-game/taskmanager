@@ -5,32 +5,24 @@ import route from "ziggy-js"; // Ziggy をインポート
 
 import { defineProps, ref, defineEmits } from "vue";
 
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     task: Array,
 });
 
-const emit = defineEmits(['taskDeleted']);
+const emit = defineEmits(["taskDeleted"]);
 
 const task = ref(props.task);
 
 // 必要なCRUD操作のメソッドをここに実装
 // ToDoItem.vue 内の deleteTask メソッド
 const deleteTask = () => {
-    if (confirm("このタスクを削除してもよろしいですか？")) {
-        Inertia.delete(route("tasks.destroy", props.task.id), {
-            onSuccess: () => {
-                // 親コンポーネントへのイベント発火や状態の更新をここで行う
-                console.log("onSuccess done messages!");
-                emit("taskDeleted", props.task.id);
-            },
-        });
-    }
+    emit("taskDeleted", props.task.id);
 };
 
 const editTask = () => {
-    // 編集処理の実装（例：モーダルを開く、別のページに遷移するなど）
+    router.get(route('tasks.show', props.task.id));
 };
 </script>
 
@@ -50,7 +42,7 @@ const editTask = () => {
                     @click="editTask"
                     class="bg-blue-500 text-white p-2 rounded mr-2"
                 >
-                    編集
+                    詳細表示
                 </button>
                 <button
                     @click="deleteTask"

@@ -1,6 +1,8 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import ToDoItem from "./ToDoItem.vue";
+import { router } from "@inertiajs/vue3";
+import route from "ziggy-js";
 
 // propsを定義して、外部から渡されるデータを受け取る
 const props = defineProps({
@@ -10,13 +12,16 @@ const props = defineProps({
 const tasks = ref(props.tasks);
 
 const addTask = () => {
-    Inertia.get(route("tasks.create"), {});
+    router.get(route("tasks.create"));
 };
 
 const handleTaskDeleted = (taskId) => {
-    tasks.value = tasks.value.filter((task) => task.id !== taskId);
+    if (confirm("このタスクを削除してもよろしいですか？")) {
+        axios.delete(route("tasks.destroy", taskId)).then(() => {
+            tasks.value = tasks.value.filter((task) => task.id !== taskId);
+        });
+    }
 };
-
 </script>
 <template>
     <div class="bg-white shadow overflow-hidden sm:rounded-lg">

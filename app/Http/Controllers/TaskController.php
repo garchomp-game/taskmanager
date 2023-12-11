@@ -7,6 +7,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Task;
 use App\Services\TaskService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class TaskController extends Controller
 {
@@ -44,8 +46,9 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void
+    public function show(Task $task): Response
     {
+        return Inertia::render("Task/Show", compact("task"));
         //
     }
 
@@ -68,12 +71,11 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task): Response
+    public function destroy(Task $task): JsonResponse
     {
-        $task->delete();
-        return Inertia::render(
-            'Dashboard',
-            $this->taskService->getToDoListData()
-        );
+        if($task->delete()) {
+            return response()->json(['status' => 'success', 'message' => 'Task successfully deleted']);
+        }
+        return response()->json(['status' => 'error', 'message' => 'Task deletion failed'], 500);
     }
 }
