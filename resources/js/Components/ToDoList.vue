@@ -4,7 +4,7 @@ import ToDoItem from "./ToDoItem.vue";
 
 // propsを定義して、外部から渡されるデータを受け取る
 const props = defineProps({
-    tasks: Object, // tasksをArray型として定義
+    tasks: Array, // tasksをArray型として定義
 });
 
 const tasks = ref(props.tasks);

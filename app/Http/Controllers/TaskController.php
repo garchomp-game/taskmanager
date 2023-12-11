@@ -5,26 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
-use Illuminate\Http\RedirectResponse;
+use App\Services\TaskService;
 
 class TaskController extends Controller
 {
+    private $taskService;
+    public function __construct(TaskService $taskService) {
+        $this->taskService = $taskService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): Response
     {
-
-        $user = Auth::user();
-        /* $tasks = $user->tasks; // 仮定：ユーザーに関連するタスクがあるとします */
-        $tasks = Task::with("status")->get()->toArray(); // 仮定：ユーザーに関連するタスクがあるとします
-
-        return Inertia::render('Dashboard', [
-            'user' => $user,
-            'tasks' => $tasks
-        ]);
+        return Inertia::render(
+            'Dashboard',
+            $this->taskService->getToDoListData()
+        );
     }
 
     /**
@@ -70,9 +68,12 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task): RedirectResponse
+    public function destroy(Task $task): Response
     {
         $task->delete();
-        return redirect()->route('tasks.index');
+        return Inertia::render(
+            'Dashboard',
+            $this->taskService->getToDoListData()
+        );
     }
 }

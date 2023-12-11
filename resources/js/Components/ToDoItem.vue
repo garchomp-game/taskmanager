@@ -22,6 +22,7 @@ const deleteTask = () => {
         Inertia.delete(route("tasks.destroy", props.task.id), {
             onSuccess: () => {
                 // 親コンポーネントへのイベント発火や状態の更新をここで行う
+                console.log("onSuccess done messages!");
                 emit("taskDeleted", props.task.id);
             },
         });
