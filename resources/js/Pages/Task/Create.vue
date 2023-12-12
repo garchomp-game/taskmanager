@@ -1,33 +1,88 @@
 <script setup>
-import FormSection from "@/Components/FormSection.vue";
-import SectionTitle from "@/Components/SectionTitle.vue";
+import { useForm } from "@inertiajs/vue3";
+import route from "ziggy-js";
 
-const onSubmit = () => {};
+const form = useForm({
+    title: "",
+    description: "",
+    status_id: null,
+    due_date: null,
+});
+
+const onSubmit = (event) => {
+    event.preventDefault(); // デフォルトの送信を防ぐ
+    form.post(route("tasks.store"));
+};
 </script>
 <template>
-    <FormSection @submitted="onSubmit">
-        <template #title>
-            <SectionTitle>
-                <template #title>新規作成</template>
-                <template #description>新規作成画面</template>
-            </SectionTitle>
-        </template>
+    <div class="max-w-md mx-auto mt-10">
+        <form @submit.prevent="onSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label
+                    for="title"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >タスク名</label
+                >
+                <input
+                    type="text"
+                    id="title"
+                    v-model="form.title"
+                    placeholder="タスク名"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
 
-        <template #description>
-            <!-- 説明文をここに挿入 -->
-            <p>このセクションの詳細な説明。</p>
-        </template>
+            <div class="mb-4">
+                <label
+                    for="description"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >説明</label
+                >
+                <textarea
+                    id="description"
+                    v-model="form.description"
+                    placeholder="タスクの詳細"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                ></textarea>
+            </div>
 
-        <template #form>
-            <!-- フォームの入力フィールドをここに挿入 -->
-            <input type="text" placeholder="名前" />
-            <input type="email" placeholder="メールアドレス" />
-            <!-- その他のフォーム要素 -->
-        </template>
+            <div class="mb-4">
+                <label
+                    for="status_id"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >ステータス</label
+                >
+                <select
+                    id="status_id"
+                    v-model="form.status_id"
+                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                    <!-- ステータスオプションをここに挿入 -->
+                </select>
+            </div>
 
-        <template #actions>
-            <!-- フォームのアクション（例：送信ボタン）をここに挿入 -->
-            <button type="submit">送信</button>
-        </template>
-    </FormSection>
+            <div class="mb-4">
+                <label
+                    for="due_date"
+                    class="block text-gray-700 text-sm font-bold mb-2"
+                    >期限</label
+                >
+                <input
+                    type="date"
+                    id="due_date"
+                    v-model="form.due_date"
+                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button
+                    type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                    作成
+                </button>
+            </div>
+        </form>
+    </div>
 </template>

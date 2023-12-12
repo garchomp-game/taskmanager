@@ -8,7 +8,7 @@ use Inertia\Response;
 use App\Models\Task;
 use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
 
 class TaskController extends Controller
 {
@@ -38,9 +38,12 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(Request $request): RedirectResponse
     {
-        //
+        if($request->validate()) {
+            Task::create($request->all());
+        }
+        return redirect()->route("tasks.index");
     }
 
     /**
