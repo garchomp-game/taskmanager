@@ -14,9 +14,13 @@ const onSubmit = (event) => {
     form.post(route("tasks.store"));
 };
 </script>
+
 <template>
     <div class="max-w-md mx-auto mt-10">
-        <form @submit.prevent="onSubmit" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+            @submit.prevent="onSubmit"
+            class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
             <div class="mb-4">
                 <label
                     for="title"
@@ -30,6 +34,7 @@ const onSubmit = (event) => {
                     placeholder="タスク名"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
+                <p v-show="form.errors.title" class="text-red-500 text-xs italic">{{ form.errors.title }}</p>
             </div>
 
             <div class="mb-4">
@@ -44,6 +49,7 @@ const onSubmit = (event) => {
                     placeholder="タスクの詳細"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 ></textarea>
+                <p v-show="form.errors.description" class="text-red-500 text-xs italic">{{ form.errors.description }}</p>
             </div>
 
             <div class="mb-4">
@@ -59,6 +65,7 @@ const onSubmit = (event) => {
                 >
                     <!-- ステータスオプションをここに挿入 -->
                 </select>
+                <p v-show="form.errors.status_id" class="text-red-500 text-xs italic">{{ form.errors.status_id }}</p>
             </div>
 
             <div class="mb-4">
@@ -73,6 +80,7 @@ const onSubmit = (event) => {
                     v-model="form.due_date"
                     class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
+                <p v-show="form.errors.due_date" class="text-red-500 text-xs italic">{{ form.errors.due_date }}</p>
             </div>
 
             <div class="flex items-center justify-between">

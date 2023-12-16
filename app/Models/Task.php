@@ -17,6 +17,18 @@ class Task extends Model
         'team_id'
     ];
 
+    public static function validationRules()
+    {
+        return [
+            'title'       => 'required|string|max:255',
+            'description' => 'required|string',
+            'status_id'   => 'required|integer|exists:task_statuses,id',
+            'due_date'    => 'nullable|date',
+            'user_id'     => 'required|integer|exists:users,id',
+            'team_id'     => 'nullable|integer|exists:teams,id'
+        ];
+    }
+
 
     /**
      * このタスクを所有しているユーザーを取得します。

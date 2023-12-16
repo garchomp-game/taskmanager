@@ -40,9 +40,10 @@ class TaskController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        if($request->validate()) {
-            Task::create($request->all());
-        }
+        $validatedData = $request->validate(Task::validationRules());
+
+        Task::create($validatedData);
+
         return redirect()->route("tasks.index");
     }
 
