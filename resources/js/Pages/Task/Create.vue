@@ -3,6 +3,7 @@ import { useForm } from "@inertiajs/vue3";
 import { ref, defineProps } from "vue";
 import route from "ziggy-js";
 import TaskForm from "@/Components/TaskForm.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 
 const form = useForm({
     title: "",
@@ -23,7 +24,18 @@ const onSubmit = (form) => {
 </script>
 
 <template>
-    <div class="max-w-md mx-auto mt-10">
-        <TaskForm :form="form" :taskStatus="taskStatus" @submit="onSubmit" />
-    </div>
+    <AppLayout title="新規作成画面">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                ToDoリスト
+            </h2>
+        </template>
+        <div class="max-w-md mx-auto mt-10">
+            <TaskForm
+                :form="form"
+                :taskStatus="taskStatus"
+                @submit="onSubmit"
+            />
+        </div>
+    </AppLayout>
 </template>

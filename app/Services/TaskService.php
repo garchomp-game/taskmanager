@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,16 @@ class TaskService
         $taskStatus = $this->taskRepository->getTaskStatusList();
         return compact("taskStatus");
     }
+
+    public function getTaskEditData(Task $task): Array
+    {
+        $taskStatus = $this->taskRepository->getTaskStatusList();
+        return [
+            'taskStatus' => $taskStatus,
+            "task" => $task
+        ];
+    }
+
     public function setStoreData(Array $validateData): Array
     {
         $validateData["user_id"] = Auth::user()->id;

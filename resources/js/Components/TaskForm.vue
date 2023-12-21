@@ -1,15 +1,14 @@
 <script setup>
-
 const props = defineProps({
     form: Object,
     taskStatus: Array,
-})
+});
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits(["submit"]);
 
 const onSubmit = (event) => {
     event.preventDefault(); // デフォルトの送信を防ぐ
-    emit('submit', props.form)
+    emit("submit", props.form);
 };
 </script>
 
