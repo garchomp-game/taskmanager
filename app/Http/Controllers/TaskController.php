@@ -32,7 +32,10 @@ class TaskController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render("Task/Create");
+        return Inertia::render(
+            "Task/Create",
+            $this->taskService->getStatusList()
+        );
     }
 
     /**
@@ -40,9 +43,11 @@ class TaskController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all());
         $validatedData = $request->validate(Task::validationRules());
-
-        Task::create($validatedData);
+        Task::create(
+            $this->taskService->setStoreData($validatedData)
+        );
 
         return redirect()->route("tasks.index");
     }

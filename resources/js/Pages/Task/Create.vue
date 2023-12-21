@@ -1,5 +1,6 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 import route from "ziggy-js";
 
 const form = useForm({
@@ -8,6 +9,12 @@ const form = useForm({
     status_id: null,
     due_date: null,
 });
+
+const props = defineProps({
+    taskStatus: Array,
+});
+
+const taskStatus = ref(props.taskStatus);
 
 const onSubmit = (event) => {
     event.preventDefault(); // デフォルトの送信を防ぐ
@@ -34,7 +41,12 @@ const onSubmit = (event) => {
                     placeholder="タスク名"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <p v-show="form.errors.title" class="text-red-500 text-xs italic">{{ form.errors.title }}</p>
+                <p
+                    v-show="form.errors.title"
+                    class="text-red-500 text-xs italic"
+                >
+                    {{ form.errors.title }}
+                </p>
             </div>
 
             <div class="mb-4">
@@ -49,7 +61,12 @@ const onSubmit = (event) => {
                     placeholder="タスクの詳細"
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 ></textarea>
-                <p v-show="form.errors.description" class="text-red-500 text-xs italic">{{ form.errors.description }}</p>
+                <p
+                    v-show="form.errors.description"
+                    class="text-red-500 text-xs italic"
+                >
+                    {{ form.errors.description }}
+                </p>
             </div>
 
             <div class="mb-4">
@@ -63,9 +80,20 @@ const onSubmit = (event) => {
                     v-model="form.status_id"
                     class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
-                    <!-- ステータスオプションをここに挿入 -->
+                    <option
+                        v-for="status in taskStatus"
+                        :key="status.id"
+                        :value="status.id"
+                    >
+                        {{ status.name }}
+                    </option>
                 </select>
-                <p v-show="form.errors.status_id" class="text-red-500 text-xs italic">{{ form.errors.status_id }}</p>
+                <p
+                    v-show="form.errors.status_id"
+                    class="text-red-500 text-xs italic"
+                >
+                    {{ form.errors.status_id }}
+                </p>
             </div>
 
             <div class="mb-4">
@@ -80,7 +108,12 @@ const onSubmit = (event) => {
                     v-model="form.due_date"
                     class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
-                <p v-show="form.errors.due_date" class="text-red-500 text-xs italic">{{ form.errors.due_date }}</p>
+                <p
+                    v-show="form.errors.due_date"
+                    class="text-red-500 text-xs italic"
+                >
+                    {{ form.errors.due_date }}
+                </p>
             </div>
 
             <div class="flex items-center justify-between">

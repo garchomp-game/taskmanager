@@ -30,3 +30,6 @@ const tasks = ref(props.tasks);
     </div>
   </AppLayout>
 </template>
+<style>
+
+</style>
