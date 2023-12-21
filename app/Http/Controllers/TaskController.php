@@ -57,7 +57,7 @@ class TaskController extends Controller
      */
     public function show(Task $task): Response
     {
-        return Inertia::render("Task/Show", compact("task"));
+        return Inertia::render("Task/Show", ["task" => $task->load("status")]);
         //
     }
 
