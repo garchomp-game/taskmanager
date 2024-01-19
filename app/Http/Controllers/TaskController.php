@@ -76,9 +76,15 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): void
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        $validatedData = $request->validate(Task::validationRules());
+        $task = Task::find($id);
+        $task->save(
+            $this->taskService->setStoreData($validatedData)
+        );
+
+        return redirect()->route("tasks.index");
     }
 
     /**
