@@ -2,15 +2,15 @@
 namespace App\Repositories;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskRepository
 {
-    public function getAllTasks(): array
+    public function getAllTasks(): LengthAwarePaginator
     {
         return Task::with("status")
             ->orderBy("created_at", "desc")
-            ->get()
-            ->toArray();
+            ->paginate();
     }
 
     public function deleteTask(Task $task): void

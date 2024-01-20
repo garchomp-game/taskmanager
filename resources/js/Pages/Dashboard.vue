@@ -1,14 +1,21 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import ToDoList from '@/Components/ToDoList.vue';
+import Pagination from '@/Components/Pagination.vue';
 import { ref } from 'vue';
 
 const props = defineProps({
   user: Object,
-  tasks: Array // tasksをArray型として定義
+  tasks: Object // tasksをArray型として定義
 });
 
-const tasks = ref(props.tasks);
+const tasksData = ref(props.tasks.data); // データ部分のみを抽出
+const pagination = ref({
+  current_page: props.tasks.current_page,
+  last_page: props.tasks.last_page,
+  // その他必要なページネーション情報
+});
+
 </script>
 
 <template>
@@ -24,10 +31,12 @@ const tasks = ref(props.tasks);
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
           <!-- ここでToDoListにタスク一覧のデータを渡す。-->
-          <ToDoList :tasks="tasks" /> <!-- ToDoListコンポーネントにtasksを渡す -->
+          <ToDoList :tasks="tasksData" /> <!-- ToDoListコンポーネントにtasksを渡す -->
         </div>
       </div>
     </div>
+    <!-- ページネーションコントロール -->
+    <Pagination :pagination="pagination" />
   </AppLayout>
 </template>
 <style>
