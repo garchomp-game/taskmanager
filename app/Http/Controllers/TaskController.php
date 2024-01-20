@@ -19,11 +19,11 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
         return Inertia::render(
             'Dashboard',
-            $this->taskService->getToDoListData()
+            $this->taskService->getToDoListData($request->input('sort'))
         );
     }
 

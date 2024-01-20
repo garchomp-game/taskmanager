@@ -6,11 +6,17 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskRepository
 {
-    public function getAllTasks(): LengthAwarePaginator
+    public function getAllTasks(String $sort = null): LengthAwarePaginator
     {
-        return Task::with("status")
-            ->orderBy("created_at", "desc")
-            ->paginate();
+        if($sort == null || $sort == "default") {
+            return Task::with("status")
+                ->orderBy("created_at", "desc")
+                ->paginate();
+        } else {
+            return Task::with("status")
+                ->orderBy($sort, "asc")
+                ->paginate();
+        }
     }
 
     public function deleteTask(Task $task): void

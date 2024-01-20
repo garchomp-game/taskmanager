@@ -6,6 +6,8 @@ use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
+use function Symfony\Component\String\b;
+
 class TaskService
 {
     protected $taskRepository;
@@ -15,10 +17,15 @@ class TaskService
         $this->taskRepository = $taskRepository;
     }
 
-    public function getToDoListData(): Authenticatable|Null|Array
+    public function getToDoListData(String $sort = null): Authenticatable|Null|Array
     {
         $user = Auth::user();
-        $tasks = $this->taskRepository->getAllTasks();
+        $tasks = null;
+        if($sort == null) {
+            $tasks = $this->taskRepository->getAllTasks();
+        } else {
+            $tasks = $this->taskRepository->getAllTasks($sort);
+        }
 
         return [
             'user' => $user,
