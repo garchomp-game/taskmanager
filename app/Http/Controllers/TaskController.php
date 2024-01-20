@@ -23,7 +23,7 @@ class TaskController extends Controller
     {
         return Inertia::render(
             'Dashboard',
-            $this->taskService->getToDoListData($request->input('sort'))
+            $this->taskService->getToDoListData($request)
         );
     }
 

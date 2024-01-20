@@ -2,19 +2,22 @@
 namespace App\Repositories;
 use App\Models\Task;
 use App\Models\TaskStatus;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskRepository
 {
-    public function getAllTasks(String $sort = null): LengthAwarePaginator
+    public function getAllTasks(Request $request): LengthAwarePaginator
     {
+        $sort = $request->input('sort');
+        $order = $request->input('order') ?? "desc";
         if($sort == null || $sort == "default") {
             return Task::with("status")
-                ->orderBy("created_at", "desc")
+                ->orderBy("created_at", $order)
                 ->paginate();
         } else {
             return Task::with("status")
-                ->orderBy($sort, "asc")
+                ->orderBy($sort, $order)
                 ->paginate();
         }
     }
@@ -23,6 +26,9 @@ class TaskRepository
     {
         $task->delete();
     }
+    /**
+     * @return array
+     */
     public function getTaskStatusList(): array
     {
         return TaskStatus::all()->toArray();

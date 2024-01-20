@@ -4,9 +4,8 @@ namespace App\Services;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use function Symfony\Component\String\b;
 
 class TaskService
 {
@@ -17,19 +16,16 @@ class TaskService
         $this->taskRepository = $taskRepository;
     }
 
-    public function getToDoListData(String $sort = null): Authenticatable|Null|Array
+    public function getToDoListData(Request $request): Authenticatable|Null|Array
     {
         $user = Auth::user();
-        $tasks = null;
-        if($sort == null) {
-            $tasks = $this->taskRepository->getAllTasks();
-        } else {
-            $tasks = $this->taskRepository->getAllTasks($sort);
-        }
+        $tasks = $this->taskRepository->getAllTasks($request);
 
         return [
             'user' => $user,
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'sort' => $request->input('sort'),
+            'order' => $request->input('order'),
         ];
     }
     public function getStatusList(): Array
