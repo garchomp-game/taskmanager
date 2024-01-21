@@ -64,7 +64,6 @@ const sortTasks = () => {
                             @change="sortTasks"
                             class="p-2 border rounded"
                         >
-                            <option value="default">ソート</option>
                             <option value="created_at">作成日</option>
                             <option value="status_id">ステータス</option>
                             <!-- その他のソート基準 -->

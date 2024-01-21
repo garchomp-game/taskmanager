@@ -11,7 +11,7 @@ class TaskRepository
     {
         $sort = $request->input('sort');
         $order = $request->input('order') ?? "desc";
-        if($sort == null || $sort == "default") {
+        if($sort == null) {
             return Task::with("status")
                 ->orderBy("created_at", $order)
                 ->paginate();
