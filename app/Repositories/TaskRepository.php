@@ -12,13 +12,15 @@ class TaskRepository
         $sort = $request->input('sort');
         $order = $request->input('order') ?? "desc";
         if($sort == null) {
-            return Task::with("status")
+            $result = Task::with("status")
                 ->orderBy("created_at", $order)
                 ->paginate();
+        return $result;
         } else {
-            return Task::with("status")
+            $result = Task::with("status")
                 ->orderBy($sort, $order)
                 ->paginate();
+        return $result;
         }
     }
 

@@ -1,26 +1,31 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps, ref } from "vue";
 import ToDoItem from "./ToDoItem.vue";
 import { router } from "@inertiajs/vue3";
 import route from "ziggy-js";
+import axios from 'axios';
+import { Task } from "@/Types/Task";
+
+// propsの型定義
+interface Props {
+  tasks: Task[];
+}
 
 // propsを定義して、外部から渡されるデータを受け取る
-const props = defineProps({
-    tasks: Array, // tasksをArray型として定義
-});
+const props = defineProps<Props>();
 
-const tasks = ref(props.tasks);
+const tasks = ref<Task[]>(props.tasks);
 
 const addTask = () => {
-    router.get(route("tasks.create"));
+  router.get(route("tasks.create"));
 };
 
-const handleTaskDeleted = (taskId) => {
-    if (confirm("このタスクを削除してもよろしいですか？")) {
-        axios.delete(route("tasks.destroy", taskId)).then(() => {
-            tasks.value = tasks.value.filter((task) => task.id !== taskId);
-        });
-    }
+const handleTaskDeleted = (taskId: number) => {
+  if (confirm("このタスクを削除してもよろしいですか？")) {
+    axios.delete(route("tasks.destroy", taskId)).then(() => {
+      tasks.value = tasks.value.filter((task: Task) => task.id !== taskId);
+    });
+  }
 };
 </script>
 <template>

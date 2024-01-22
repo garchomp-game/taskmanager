@@ -1,19 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import route from "ziggy-js"; // Ziggy をインポート
-// @inertiajs/inertiaとziggyが最初からは入ってないことが発覚。思い込みは良くない。素直にとりあえずインストールしてみることが大事。それで動くこともある。
-// 実際の現場では、現場ごとに採用しているアプローチが異なるため、このような問題は都度確認をすること。
-
-import { defineProps, ref, defineEmits } from "vue";
-
+import { defineProps, ref, Ref, defineEmits } from "vue";
 import { router } from "@inertiajs/vue3";
 
-const props = defineProps({
-    task: Array,
-});
+// Taskインターフェースをインポート
+import { Task } from "@/Types/Task";
+
+// propsの型定義
+interface Props {
+    task: Task;
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits(["taskDeleted"]);
 
-const task = ref(props.task);
+const task: Ref<Task> = ref(props.task);
 
 // 必要なCRUD操作のメソッドをここに実装
 // ToDoItem.vue 内の deleteTask メソッド
