@@ -2,6 +2,7 @@
 import AppLayout from "@/Layouts/AppLayout.vue";
 import ToDoList from "@/Components/ToDoList.vue";
 import Pagination from "@/Components/Pagination.vue";
+import LangChangeDropDown from "@/Components/LangChangeDropDown.vue";
 import { ref, watch } from "vue";
 import { router } from "@inertiajs/vue3";
 import route from "ziggy-js";
@@ -50,6 +51,8 @@ const sortTasks = () => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 ToDoリスト
             </h2>
+            <p>{{ $t('message.hello') }}</p>
+            <LangChangeDropDown position="right" />
         </template>
 
         <div class="py-12">
