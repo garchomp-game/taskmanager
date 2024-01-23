@@ -1,6 +1,6 @@
 <template>
   <div :class="dropdownClass">
-    <select @change="changeLanguage($event.target.value)" class="p-2 border rounded mr-2">
+    <select @change="changeLanguage($event.target.value)" class="p-2 border rounded mr-2 w-32">
       <!-- 'mr-2' は右のマージンを追加する -->
       <option value="en">English</option>
       <option value="ja">日本語</option>
