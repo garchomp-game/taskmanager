@@ -31,7 +31,9 @@ onMounted(() => {
 const taskStatus = ref(props.taskStatus);
 
 const onSubmit = (form) => {
-    form.post(route("tasks.store"));
+    form.put(route("tasks.update", props.task.id), {
+        preserveScroll: true,
+    });
 };
 </script>
 

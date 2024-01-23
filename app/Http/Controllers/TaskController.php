@@ -79,9 +79,11 @@ class TaskController extends Controller
     public function update(Request $request, Task $task): RedirectResponse
     {
         $validatedData = $request->validate(Task::validationRules());
-        $task->save(
-            $this->taskService->setStoreData($validatedData)
-        );
+
+        // モデルの属性を更新
+        $taskData = $this->taskService->setStoreData($validatedData);
+        $task->fill($taskData);
+        $task->save();
 
         return redirect()->route("tasks.index");
     }
@@ -97,3 +99,4 @@ class TaskController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Task deletion failed'], 500);
     }
 }
+

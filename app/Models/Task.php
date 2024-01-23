@@ -4,7 +4,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Barryvdh\LaravelIdeHelper\Eloquent;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /** @mixin Eloquent */
 class Task extends Model
@@ -61,13 +60,5 @@ class Task extends Model
     public function status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TaskStatus::class, 'status_id');
-    }
-
-    public static function create($argument0)
-    {
-    }
-
-    public static function find(string $id)
-    {
     }
 }
