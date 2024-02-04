@@ -57,7 +57,6 @@ const sortTasks = () => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 ToDoリスト
             </h2>
-            <p>{{ $t('message.hello') }}</p>
             <LangChangeDropDown position="right" />
         </template>
 
