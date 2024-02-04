@@ -28,7 +28,7 @@ const pagination = ref({
 });
 
 // リアクティブなソート情報を初期化
-const selectedSort = ref<string>(props.sort || '');
+const selectedSort = ref<string>(props.sort || 'created_at');
 const sortOrder = ref<string>(props.order || 'asc');
 
 // props.sort または props.order が変更された場合に、selectedSort と sortOrder を更新
@@ -71,7 +71,7 @@ const sortTasks = () => {
                         <select
                             v-model="selectedSort"
                             @change="sortTasks"
-                            class="p-2 border rounded"
+                            class="p-2 border rounded w-32"
                         >
                             <option value="created_at">作成日</option>
                             <option value="status_id">ステータス</option>
