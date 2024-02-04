@@ -3,9 +3,38 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Barryvdh\LaravelIdeHelper\Eloquent;
 
-/** @mixin Eloquent */
+/**
+ * App\Models\Task
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int|null $team_id
+ * @property string $title
+ * @property string $description
+ * @property int $status_id
+ * @property string|null $due_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\TaskStatus|null $status
+ * @property-read \App\Models\Team|null $team
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\TaskFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereDueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereUserId($value)
+ * @method static array<string, string> validationRules() バリデーションルールを返す
+ * @mixin \Eloquent
+ */
 class Task extends Model
 {
     use HasFactory;
@@ -13,7 +42,7 @@ class Task extends Model
         'title',
         'description',
         'status_id',
-        'due_data',
+        'due_date',
         'user_id',
         'team_id'
     ];
